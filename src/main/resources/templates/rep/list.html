@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+<!--    <script type="text/javascript" src="asserts/js/edit.js"></script>-->
+
+    <title>报修列表</title>
+    <!-- Bootstrap core CSS -->
+    <link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="asserts/css/dashboard.css" th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+    </style>
+    <script language="javascript">
+        function edit(id, status) {
+            if(2==status){
+                alert("已提交不可编辑");
+            }
+            else{
+                location.href="/rep/rep/"+id;
+            }
+        }
+    </script>
+    <script language="javascript">
+        function submit(id, status) {
+            if(status==2){
+                alert("已提交，不可重复提交")
+            }else if(status==0){
+                alert("请先打印")
+            }else{
+                if(confirm("确认提交吗？")){
+                    location.href="/rep/repsubmit/"+id;
+                }
+            }
+        }
+    </script>
+    <script language="JavaScript">
+        function del(id,status) {
+            if(status==2){
+                alert("已提交不可删除")
+            }
+            else{
+                if(confirm("确认删除这条记录吗?")) {
+                    location.href = "/rep/repdel/" + id;
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+<!--引入抽取的topbar-->
+<!--模板名：会使用thymeleaf的前后缀配置规则进行解析-->
+<!-- <div th:replace="commons/bar::topbar"></div> -->
+
+<div class="container-fluid">
+    <div class="row">
+        <!--引入侧边栏-->
+        <!-- <div th:replace="commons/bar::#sidebar(activeUri='reps')"></div> -->
+
+        <main role="main" class="col-md-9 col-lg-10 pt-3 px-4">
+            <h2><a class="btn btn-sm btn-success" href="" th:href="@{/rep/rep}">添加报修</a></h2>
+            <div class="table-responsive">
+                <table class="table table-striped table-sm" border="1">
+                    <thead>
+                    <tr>
+                        <th>维修编号</th>
+                        <th>客户编号</th>
+                        <th>产品类型</th>
+                        <th>机器品牌</th>
+                        <th>机器型号</th>
+                        <th>系列号</th>
+                        <th>报修时间</th>
+                        <th>报修状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="rep:${reps}">
+                        <td th:text="${rep.id}"></td>
+                        <td>[[${rep.uid}]]</td>
+
+                        <td th:text="台式机" th:if="${rep.type==1}"></td>
+                        <td th:text="笔记本" th:if="${rep.type==2}"></td>
+                        <td th:text="投影仪" th:if="${rep.type==3}"></td>
+                        <td th:text="打印机" th:if="${rep.type==4}"></td>
+                        <td th:text="其他" th:if="${rep.type==5}"></td>
+
+                        <td th:text="${rep.brand}"></td>
+                        <td th:text="${rep.model}"></td>
+                        <td th:text="${rep.serialnum}"></td>
+                        <td th:text="${#dates.format(rep.time, 'yyyy-MM-dd HH:mm')}"></td>
+
+                        <td th:text="未打印" th:if="${rep.status==0}"></td>
+                        <td th:text="打印" th:if="${rep.status==1}"></td>
+                        <td th:text="提交" th:if="${rep.status==2}"></td>
+
+
+                        <td>
+<!--                            <a class="btn btn-sm btn-primary" th:href="@{/rep/}+${rep.id}">编辑</a>-->
+
+                            <a class="btn-sm btn-primary" th:href="${'javascript:edit('+rep.id+','+rep.status+')'}">编辑</a>
+                            <a class="btn-sm btn-primary" th:href="@{/rep/reprint/}+${rep.id}">打印</a>
+                            <a class="btn-sm btn-primary" th:href="${'javascript:submit('+rep.id+','+rep.status+')'}">提交</a>
+                            <a class="btn-sm btn-primary bg-danger" th:href="${'javascript:del('+rep.id+','+rep.status+')'}">删除</a>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js" th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
+<script type="text/javascript" src="asserts/js/popper.min.js" th:src="@{/webjars/popper.js/1.14.3/umd/popper.js}"></script>
+<script type="text/javascript" src="asserts/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.js}"></script>
+
+<!-- Icons -->
+<script type="text/javascript" src="asserts/js/feather.min.js" th:src="@{/asserts/js/feather.min.js}"></script>
+<script>
+    feather.replace()
+</script>
+</body>
+</html>

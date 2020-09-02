@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>开始</title>
+		<link rel="stylesheet" href="/layui/css/layui.css"  media="all">
+		<script src="/js/jquery.min.js"></script>
+		<script src="/layui/layui.js"></script>
+		<style type="text/css">
+			#body {
+				position: absolute;
+				width: 400px;
+				height: 200px;
+				left: 50%;
+				top: 40%;
+				margin-left: -200px;
+				margin-top: -100px;
+				/* border:1px solid #090 */
+			}
+
+			#yanzheng-img {
+				height: 30px;
+				width: 130px;
+				border: black solid 1px;
+				position: absolute;
+			}
+
+			
+
+			#input,
+			#password {
+				width: 100%;
+			}
+
+			#yanzheng {
+				height: 35px;
+				width: 250px;
+			}
+			#input{
+				margin-bottom:20px;
+				margin-top:20px;
+			}
+			#password{
+				margin-bottom:20px;
+				margin-top:20px;
+			}
+			#div1{
+				margin-bottom:20px;
+				margin-top:20px;
+			}
+			#bt{
+				width: 100%;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div id="body">
+			<form action="/login/" method="POST">
+			<div id="">
+				<h1 align="center">登陆</h1>
+			</div>
+			<div id="main" >
+				<div id="input" class=" layui-anim-scale">
+					<input type="" name="name" id="input" placeholder="请输入用户名" class="layui-input" />
+				</div>
+				<div id="password">
+					<input type="" name="password" id="password" placeholder="请输入密码" class="layui-input" />
+				</div>
+
+
+				<div id="div1" class="layui-row">
+					<div class="layui-col-md6">
+						<input type="" name="" id="yanzheng" value="" placeholder="请输入验证码" class="layui-input" />
+					</div>
+					<img src="" id="yanzheng-img" class="layui-col-md-offset2">
+				</div>
+				
+				
+					<div id="">
+						<input class="layui-input" type="submit">
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

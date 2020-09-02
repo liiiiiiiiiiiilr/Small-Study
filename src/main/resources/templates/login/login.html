@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)file:///C:/Users/zero/Desktop/new%201.html -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>设备维修管理系统登录</title>
+    <link type="text/css" rel="stylesheet" href="./login_files/login.css">
+    <script type="text/javascript" src="./login_files/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="./login_files/login.js"></script>
+    <script src="./login_files/jQuery.md5.js"></script>
+
+    <script>
+        if (window != top) // 判断当前的window对象是否是top对象
+            top.location.href = window.location.href; // 如果不是，将top对象的网址自动导向被嵌入网页的网址
+    </script>
+
+</head>
+
+<body style="overflow:hidden">
+    <div class="pagewrap">
+        <div class="main">
+            <div class="header">
+                <div style="width:768px;margin:0px auto;">
+                </div>
+            </div>
+            <div class="content">
+                <div class="con_left"></div>
+                <div class="con_right">
+                    <div class="con_r_top"></div>
+                    <ul>
+                        <li class="con_r_left" style="display: none;">
+                            <div class="erweima">
+                                <div class="qrcode">
+                                    <div id="output" style="width: 100%; position: relative">
+                                        <img src="./login_files/2weima.png" style="width: 174px; height: 174px">
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="height: 70px">
+                            </div>
+                        </li>
+
+
+                        <li class="con_r_right" style="display: block;">
+                            <!-- <form name="form1" method="post" autocomplete="off"> -->
+                            <input type="hidden" id="rnd" th:value="${rnd}">
+                            <div class="user">
+                                <div>
+                                    <span class="user-icon"></span>
+                                    <input type="text" id="userid" name="userid" placeholder="　输入账号" value="">
+                                </div>
+
+                                <div>
+                                    <span class="mima-icon"></span>
+                                    <input type="password" id="pwd" name="pwd" placeholder="　输入密码" value="">
+                                </div>
+
+                                <div>
+                                    <span class="yzmz-icon"></span>
+                                    <input id="vdcode" type="text" name="validate" placeholder="　验证码" value=""
+                                        style=" width:150px;">
+                                    <!-- 这里是验证码的相关路径，各位站长自行更换 -->
+
+                                    <img style="cursor: pointer; margin-top:8px;" id="imgHoverTreeCode" alt="看不清？点击更换"
+                                        title="看不清？点击更换" src="/login/defaultKaptcha">
+                                </div>
+
+                            </div><br>
+                            <button id="btn_Login" type="submit">登 录</button>
+                            <!-- </form> -->
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>

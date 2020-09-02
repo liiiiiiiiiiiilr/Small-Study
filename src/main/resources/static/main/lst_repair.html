@@ -1,0 +1,20 @@
+<div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+        <ul class="layui-nav layui-nav-tree" lay-filter="test">
+            <li class="layui-nav-item layui-nav-itemed">
+                <a class="" href="javascript:;">维修管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="/repair/tasks">所有维修任务</a></dd>
+                    <dd><a href="/repair/undelievered">未分配的维修任务</a></dd>
+                    <dd><a href="/repair/ones">个人维修任务</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="/repair/set">设置</a></li>
+            <li class="layui-nav-item"><a href="/repair/help.html">帮助</a></li>
+        </ul>
+    </div>
+</div>
+<script>
+    $("#if_content").attr("src", "/repair/undelievered");
+</script>

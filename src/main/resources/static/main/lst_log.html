@@ -1,0 +1,20 @@
+<div class="layui-side-scroll">
+  <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+  <ul class="layui-nav layui-nav-tree" lay-filter="test">
+    <li class="layui-nav-item layui-nav-itemed">
+      <a class="" href="javascript:;">显示日志</a>
+      <dl class="layui-nav-child">
+        <dd><a id="default" href="/log/showlogs">VERBOSE</a></dd>
+        <dd><a href="/log/showlogs/1">DEBUG</a></dd>
+        <dd><a href="/log/showlogs/2">INFO</a></dd>
+        <dd><a href="/log/showlogs/3">WARN</a></dd>
+        <dd><a href="/log/showlogs/4">ERROR</a></dd>
+      </dl>
+    </li>
+    <li class="layui-nav-item"><a href="/log/addlogtest.html">添加日志</a></li>
+    <li class="layui-nav-item"><a href="/log/help.html">帮助</a></li>
+  </ul>
+</div>
+<script>
+  $("#if_content").attr("src","/log/showlogs/1");
+</script>

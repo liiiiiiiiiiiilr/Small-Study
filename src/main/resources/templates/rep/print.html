@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>确认单</title>
+    <!-- Bootstrap core CSS -->
+    <link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="asserts/css/dashboard.css" th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+    </style>
+    <script language="javascript">
+        function prt(){
+            document.getElementById("prt_btn").style.display = "none";
+
+            window.print();
+
+            //部分还原回来
+            document.getElementById("prt_btn").style.display = "";
+            return false;
+        }
+    </script>
+</head>
+<body>
+<table border="1" align="center" cellspacing="0" width="80%" height="80%" class="table table-striped table-sm">
+    <th colspan="4">计算机服务公司取机凭证</th>
+    <tr>
+        <td>接修日期</td><td th:text="${#dates.format(rep.time, 'yyyy-MM-dd HH:mm')}"></td>
+        <td>维修编号</td><td th:text="${rep.id}"></td>
+    </tr>
+    <tr>
+        <td>产品类型</td><td th:text="${rep.type}"></td>
+        <td>机器品牌</td><td th:text="${rep.brand}"></td>
+    </tr>
+    <tr>
+        <td>机器型号</td><td th:text="${rep.model}"></td>
+        <td>系列号</td><td th:text="${rep.serialnum}"></td>
+    </tr>
+    <tr>
+        <td>单位名称</td><td th:text="${user.company}"></td>
+        <td>联系人</td><td th:text="${user.name}"></td>
+    </tr>
+    <tr>
+        <td colspan="4">机器故障现象</td>
+    </tr>
+    <tr>
+        <td colspan="4" th:text="${rep.fault}"></td>
+    </tr>
+    <tr>
+        <td colspan="2">缺少零件</td><td colspan="2">随机附件</td>
+    </tr>
+    <tr>
+        <td colspan="2" rowspan="1" th:text="${rep.lack}">&nbsp;</td>
+        <td colspan="2" rowspan="1" th:text="${rep.other}">&nbsp;</td>
+    </tr>
+</table>
+
+<table align="center" cellspacing="0" width="80%">
+    <tr>
+        <td>接机签字</td>
+        <td colspan="1"></td>
+        <td>机主签字</td>
+        <td colspan="1"></td>
+        <td>打印时间</td><td th:text="${#dates.format(time, 'yyyy-MM-dd HH:mm')}"></td>
+    </tr>
+</table>
+<table>
+    <tr><td>&nbsp;</td>
+        <td><button class="btn btn-sm btn-primary" id="prt_btn" onclick="prt()">打印</button></td>
+    </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>结算管理</title>
+    <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/table.css">
+</head>
+<body>
+<h1 style="text-align:center">修改结算信息</h1>
+<!--id,cost,materialcost,promise,note,time-->
+<form action="/cost/updatecostaction" method = post>
+    维修编号：<input type="text" name="id" th:value="${thid}"  readonly = "readonly"/><br/>
+    维修费用：<input type="text" name="cost" th:value="${thcost}" /><br/>
+    材料费用：<input type="text" name="materialcost" th:value="${thmaterialcost}"readonly = "readonly" /><br/>
+    保修承诺：<input type="text" name="promise" th:value="${thpromise}" /><br/>
+    注意事项：<input type="text" name="note" th:value="${thnote}" /><br/>
+    <!--        <input type="text" name="time" placeholder="请输入time" /><br/>-->
+    <input type="submit" value="提交" name="submit">
+    <input type="reset" value="重置" >
+</form>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>更新报修记录</title>
+    <!-- Bootstrap core CSS -->
+    <link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="asserts/css/dashboard.css" th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+    </style>
+
+    <script language="JavaScript">
+        function validateUID() {
+            var uid = document.forms[0].uid.value;
+            var  u1=document.getElementById("u1");
+            var re1 = new RegExp("^((-\\d+)|(0+))$");
+            var re2 = new RegExp("^\\d+(\\\d+)?$");
+            if((uid.search(re2)!=-1)){
+                u1.innerHTML="";
+                return true;
+            }else{
+                u1.innerHTML="<font color=red>用户ID必须是数字</font>";
+                return false;
+            }
+        }
+
+        function validatePrice() {
+            var price = document.forms[0].price.value;
+            var  p1=document.getElementById("p1");
+            var re1 = new RegExp("^((-\\d+)|(0+))$");
+            var re2 = new RegExp("^\\d+(\\.\\d+)?$");
+            if((price.search(re1)!=-1) || (price.search(re2)!=-1)){
+                p1.innerHTML="";
+                return true;
+            }else{
+                p1.innerHTML="<font color=red>预估价格必须是数字</font>";
+                return false;
+            }
+        }
+        function validateRep() {
+
+            if(!validatePrice()){
+                alert("价格不合法");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+<!--引入抽取的topbar-->
+<!--模板名：会使用thymeleaf的前后缀配置规则进行解析-->
+<!-- <div th:replace="commons/bar::topbar"></div> -->
+
+<div class="container-fluid">
+    <div class="row">
+        <!--引入侧边栏-->
+        <!-- <div th:replace="commons/bar::#sidebar(activeUri='reps')"></div> -->
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <!--需要区分是员工修改还是添加；-->
+            <form th:action="@{/rep/rep}" th:id="frm" method="post" onsubmit="validatePrice()">
+                <input type="hidden" name="_method" value="put"/>
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="input3">维修编号</label>
+                        <input type="test" class="form-control" name="id" readonly="readonly" id="input3"  th:value="${rep.id}">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="input4">客户编号</label>
+                        <input type="test" class="form-control" name="uid" readonly="readonly" id="input4"  th:value="${rep.uid}">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="input5">机器品牌</label>
+                        <input type="test" class="form-control" name="brand" id="input5" placeholder="机器品牌" th:value="${rep.brand}">
+                    </div>
+                    <div class="form-group">
+                        <label>产品类型</label>
+                        <select class="form-control" name="type">
+                            <option  th:selected="${rep.type==1}" th:value="1" th:text="${types[0]}"></option>
+                            <option  th:selected="${rep.type==2}" th:value="2" th:text="${types[1]}"></option>
+                            <option  th:selected="${rep.type==3}" th:value="3" th:text="${types[2]}"></option>
+                            <option  th:selected="${rep.type==4}" th:value="4" th:text="${types[3]}"></option>
+                            <option  th:selected="${rep.type==5}" th:value="5" th:text="${types[4]}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="input6">机器型号</label>
+                        <input type="test" class="form-control" name="brand" id="input6" th:value="${rep.model}">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="input7">系列号</label>
+                        <input type="test" class="form-control" name="serialnum" id="input7" placeholder="系列号" th:value="${rep.serialnum}">
+                    </div>
+
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group col-md-3">
+                        <label for="inputAddress">缺少零件</label>
+                        <input type="text" class="form-control" id="inputAddress" name="lack" th:value="${rep.lack}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputAddress2">故障现象</label>
+                        <input type="text" class="form-control" name="fault" id="inputAddress2" th:value="${rep.fault}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label >故障类型</label>
+                        <select class="form-control" name="faluttype">
+<!--                            <option id="in2" th:selected="${rep.faluttype==}" th:value="${type=='固定性故障'}?1:2" th:each="type:${faultTypes}" th:text="${type}">1</option>-->
+                            <option id="in1" th:selected="${rep.faluttype==1}" th:value="1"  th:text="${faultTypes[0]}">1</option>
+                            <option id="in2" th:selected="${rep.faluttype==2}" th:value="2"  th:text="${faultTypes[1]}">1</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="input9">机器外观检查</label>
+                        <input type="text" class="form-control" id="input9" name="apper" th:value="${rep.apper}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="input10">开机密码</label>"
+                        <input type="text" class="form-control" id="input10" name="password" th:value="${rep.password}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="input11">重要资料</label>
+                        <input type="text" class="form-control" id="input11" name="important"  th:value="${rep.important}">
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="input20">HDD</label>
+                        <input type="text" class="form-control" id="input20" name="hdd"  th:value="${rep.hdd}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="input21">内存</label>
+                        <input type="text" class="form-control" id="input21" name="memory"  th:value="${rep.memory}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="input22">外置PC</label>
+                        <input type="text" class="form-control" id="input22" name="outerpc" th:value="${rep.outerpc}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="input23">AC适配器</label>
+                        <input type="text" class="form-control" id="input23" name="ac" th:value="${rep.ac}">
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="input30">电池</label>
+                        <input type="text" class="form-control" id="input30" name="battery" th:value="${rep.battery}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="input31">外置光驱</label>
+                        <input type="text" class="form-control" id="input31" name="cdrom" th:value="${rep.cdrom}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="input32">外置软驱</label>
+                        <input type="text" class="form-control" id="input32" name="soft" th:value="${rep.soft}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="input32">其他</label>
+                        <input type="text" class="form-control" id="input33" name="other" th:value="${rep.other}">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="input40">预估价格</label>
+                        <input type="text" class="form-control" id="input40" name="price" th:value="${rep.price}" onblur="validatePrice()"><span id="p1"></span><br/>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>维修状态</label>
+<!--                        <select class="form-control" name="type">-->
+<!--                            <option th:selected="${rep.status==0}" th:value="0"  th:text="${status[0]}">1</option>-->
+<!--                            <option th:selected="${rep.status==1}" th:value="1"  th:text="${status[1]}">1</option>-->
+<!--                            <option th:selected="${rep.status==2}" th:value="2"  th:text="${status[2]}">1</option>-->
+<!--                        </select>-->
+                        <input type="text" readonly="readonly" class="form-control" id="input890" name="statu" th:value="${rep.status==0}?'未打印':${rep.status==1?'打印':'提交'}">
+                    </div>
+
+                </div>
+
+<!--                <button type="submit" class="btn btn-primary" th:text="${rep!=null}?'修改':'添加'">添加</button>-->
+                <a class="btn btn-primary" th:text="修改" href="javascript:document.getElementById('frm').submit();" onclick="return validateRep();">添加</a>
+            </form>
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js" th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
+<script type="text/javascript" src="asserts/js/popper.min.js" th:src="@{/webjars/popper.js/1.14.3/umd/popper.js}"></script>
+<script type="text/javascript" src="asserts/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.js}"></script>
+
+<!-- Icons -->
+<script type="text/javascript" src="asserts/js/feather.min.js" th:src="@{/asserts/js/feather.min.js}"></script>
+<script>
+    feather.replace()
+</script>
+
+</body>
+
+</html>

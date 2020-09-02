@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>操作结果</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/layui/layui.js"></script>
+    <script>
+        $(document).ready(function () {
+            layui.use(['form','element'], function () {
+                form = layui.form;
+                element=layui.element;
+                form.render(); //更新全部
+            });
+        });
+
+        var t0 = 10;//设定跳转的时间
+        var t=t0;
+        setInterval("refer()", 1000); //启动1秒定时
+        function refer() {
+            if (t == 0) {
+                window.history.go(-1);
+            }
+            document.getElementById('show').innerHTML = "" + t; // 显示倒计时
+            t--; // 计数器递减
+            element.progress('demo', (t*1.0/t0*100)+'%');
+        }
+    </script>
+</head>
+
+<body>
+    <p th:text="${text}">操作结果</p>
+    <div class="layui-progress" lay-filter="demo">
+            <div class="layui-progress-bar" lay-percent="100%"></div>
+          </div>
+
+    <p><span id="show">10</span>秒后自动<a href="javascript:window.history.go(-1);">后退到上一页</a>。</p>
+</body>
+
+</html>

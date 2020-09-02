@@ -1,0 +1,12 @@
+@startuml 登录验证流程
+服务器->session : 随机数rnd
+服务器->浏览器 : rnd
+浏览器->服务器 : 请求验证码
+服务器->session : 验证码vcode_real
+服务器->浏览器 : 验证码图片
+浏览器->浏览器 : 用户填写用户名密码u、p，并计算hash(p+rnd)
+浏览器->服务器 : u、hash(p+rnd)、验证码vcode
+session->服务器 : rnd、vcode_real
+服务器->session : 用户信息
+服务器->浏览器 : 用户验证结果
+@enduml

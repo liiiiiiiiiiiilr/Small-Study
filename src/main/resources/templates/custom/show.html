@@ -1,0 +1,32 @@
+<table class="layui-table" th:if="${custom!=null}">
+    <tr>
+        <th>id</th>
+        <th>身份证号码</th>
+        <th>客户送机时间</th>
+        <th>客户性质</th>
+        <th>单位名称</th>
+        <th>座机</th>
+        <th>移动电话</th>
+        <th>客户地址</th>
+        <th>邮编</th>
+        <th>联系人</th>
+        <th>email</th>
+        <th>修改</th>
+        <th>删除</th>
+    </tr>
+    <tr th:each="i:${custom}">
+        <td><span th:text="${i.id}"></span></td>
+        <td><span th:text="${i.idcard}"></span></td>
+        <td><span th:text="${i.stime}"></span></td>
+        <td><span th:text="${i.type}"></span></td>
+        <td><span th:text="${i.company}"></span></td>
+        <td><span th:text="${i.ftel}"></span></td>
+        <td><span th:text="${i.tel}"></span></td>
+        <td><span th:text="${i.address}"></span></td>
+        <td><span th:text="${i.postcode}"></span></td>
+        <td><span th:text="${i.name}"></span></td>
+        <td><span th:text="${i.email}"></span></td>
+        <td><a class="layui-btn" th:href="@{/custom/edit(id=${i.id})}">修改</a></td>
+        <td><a class="layui-btn layui-btn-danger" th:href="@{/custom/delete(id=${i.id})}" onclick="return confirm('是否真的要删除这条记录？');">删除</a></td>
+    </tr>
+</table>

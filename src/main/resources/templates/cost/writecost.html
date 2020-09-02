@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>结算管理</title>
+    <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/table.css">
+</head>
+<body>
+<h1 style="text-align:center">登记结算信息</h1>
+<!--id,cost,materialcost,promise,note,time-->
+    <form action="/cost/addcost" method = post>
+        维修编号：<input type="text" name="id" th:value="${tid}" readonly = "readonly" /><br/>
+        维修费用：<input type="text" name="cost" placeholder="请输入维修费用" /><br/>
+        材料费用：<input type="text" name="materialcost" th:value="${tmc}" readonly = "readonly"/><br/>
+        保修承诺：<input type="text" name="promise" placeholder="请输入保修承诺（选填）" /><br/>
+        注意事项：<input type="text" name="note" placeholder="请输入注意事项（选填）" /><br/>
+<!--        <input type="text" name="time" placeholder="请输入time" /><br/>-->
+        <input type="submit" value="登记" name="regist">
+        <input type="reset" value="重置" >
+    </form>
+</body>
+</html>

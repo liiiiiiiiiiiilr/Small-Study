@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>JE设备维修管理系统</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <script src="/js/jquery.min.js"></script>
+  <script src="/layui/layui.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("a").click(function () {
+        var href = $(this).attr("href");
+        try {
+          if ($(this).attr("target") == "side") {
+            $("#side").load(href, function () {
+              $("a").click(function () {
+                try {
+                  if ($(this).attr("target") == "" || $(this).attr("target") == undefined) {
+                    $("#if_content").attr("src", $(this).attr("href"));
+                    return false;
+                  }
+                } catch (e) {
+                  $("#if_content").attr("src", $(this).attr("href"));
+                  return false;
+                }
+                return true;
+              });
+            });
+            return false;
+          }
+        } catch (err) {
+          ;
+        }
+        return true;
+      });
+      if (window != top) // 判断当前的window对象是否是top对象
+        top.location.href = window.location.href; // 如果不是，将top对象的网址自动导向被嵌入网页的网址
+      $("#default").click();
+    });
+  </script>
+</head>
+
+<body class="layui-layout-body">
+  <div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+      <div class="layui-logo">JE设备维修管理系统</div>
+      <!-- 头部区域（可配合layui已有的水平导航） -->
+      <ul class="layui-nav layui-layout-left">
+        <li class="layui-nav-item"><a id="default" href="/main/lst_custom.html" target="side">客户管理</a></li>
+        <li class="layui-nav-item"><a href="/main/lst_report.html" target="side">报修管理</a></li>
+        <li class="layui-nav-item"><a href="/main/lst_repair.html" target="side">维修管理</a></li>
+        <li class="layui-nav-item"><a href="/main/lst_cost.html" target="side">结算管理</a></li>
+        <li class="layui-nav-item"><a href="">备件管理</a></li>
+        <li class="layui-nav-item"><a href="/main/lst_search.html" target="side">运营监督管理</a></li>
+        <li class="layui-nav-item"><a href="/main/lst_auth.html">权限管理</a></li>
+        <li class="layui-nav-item"><a href="/main/lst_log.html" target="side">日志管理</a></li>
+      </ul>
+      <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item">
+          <a href="javascript:;">
+            <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+            <span th:text="${session!=null&&session.staff!=null?session.staff.name:'请登录'}">用户</span>
+          </a>
+          <dl class="layui-nav-child">
+            <dd><a href="">基本资料</a></dd>
+            <dd><a href="">安全设置</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item"><a href="/login/logout">退了</a></li>
+      </ul>
+    </div>
+
+    <div id="side" class="layui-side layui-bg-black">
+      Loading……
+    </div>
+
+    <div class="layui-body">
+      <iframe id="if_content" src="about:blank" style="width: 100%;height:100%;"></iframe>
+    </div>
+
+    <div class="layui-footer">
+      <!-- 底部固定区域 -->
+      © JE
+    </div>
+  </div>
+  <script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+      var element = layui.element;
+
+    });
+  </script>
+</body>
+
+</html>

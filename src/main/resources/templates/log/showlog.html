@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>查看系统日志</title>
+        <link rel="stylesheet" href="/css/nav.css">
+        <link rel="stylesheet" href="/css/table.css">
+    </head>
+    <body style="background: #F0F0F0;">
+        <h1>查看系统日志</h1>
+        <p>
+            当前日志等级为：
+            <span th:if="${level eq 0}"><b>VERBOSE</b></span>
+            <span th:if="${level eq 1}"><b style="color: blue;">DEBUG</b></span>
+            <span th:if="${level eq 2}"><b style="color: green;">INFO</b></span>
+            <span th:if="${level eq 3}"><b style="color: orange;">WARN</b></span>
+            <span th:if="${level eq 4}"><b style="color: red;">ERROR</b></span>
+        </p>
+        <p>下面是<span th:if="${page eq 1}">今天</span><span th:if="${page > 1}" th:text="${(page-1)+'天前'}"></span>的日志：</p>
+        <ul class="nav">
+            <li><a href="/log/showlogs/0">VERBOSE</a></li>
+            <li><a href="/log/showlogs/1">DEBUG</a></li>
+            <li><a href="/log/showlogs/2">INFO</a></li>
+            <li><a href="/log/showlogs/3">WARN</a></li>
+            <li><a href="/log/showlogs/4">ERROR</a></li>
+        </ul>
+        <table id="customers" border="1" width="90%;" style="word-break: break-all;  word-wrap:break-word;">
+            <tr>
+                <th>lv</th>
+                <th th:remove="all">lv</th>
+                <th th:remove="all">lv</th>
+                <th th:remove="all">lv</th>
+                <th th:remove="all">lv</th>
+                <th>time</th>
+                <th>label</th>
+                <th>content</th>
+                <th th:remove="all">content</th>
+            </tr>
+            <tr th:each="i:${logs}">
+                <td th:if="${i['level'] eq 0}">&nbsp;</td>
+                <td th:if="${i['level'] eq 1}" style="background: blue;">&nbsp;</td>
+                <td th:if="${i['level'] eq 2}" style="background: green;">&nbsp;</td>
+                <td th:if="${i['level'] eq 3}" style="background: orange;">&nbsp;</td>
+                <td th:if="${i['level'] eq 4}" style="background: red;">&nbsp;</td>
+                <td th:text="${#dates.format(i['ltime'], 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td th:text="${i['label']}"></td>
+                <td th:text="${i['content']}" th:if="${#strings.length(i['content'])<=30}"></td>
+                <td th:if="${#strings.length(i['content'])>30}">
+                    <details>
+                        <summary th:text="${#strings.abbreviate(i['content'],30)}"></summary>
+                        <span th:text="${i['content']}"></span>
+                    </details>
+                </td>
+            </tr>
+        </table>
+        <ul class="nav">
+            <li th:each="i:${#numbers.sequence(1,days)}">
+                <a th:href="${'/log/showlogs/'+level+'/'+i}" th:text="${i}"></a>
+            </li>
+        </ul>
+        <p>超过<span th:text="${days}"></span>天的日志会被自动删除。</p>
+    </body>
+</html>

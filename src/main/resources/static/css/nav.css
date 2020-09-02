@@ -1,0 +1,25 @@
+
+ul.nav {
+	list-style: none;
+}
+
+ul.nav li a {
+	color: #000;
+	text-decoration: none;
+}
+
+ul.nav li {
+	padding: 5px;
+	display: inline;
+	transition: background 1s;
+	-webkit-transition: background 1s; /* Safari */
+}
+
+ul.nav li:hover {
+	background: black;
+}
+
+ul.nav li:hover>a {
+	color: white;
+	font-weight: bold;
+}

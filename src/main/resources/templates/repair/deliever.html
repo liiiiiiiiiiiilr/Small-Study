@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>分配维修任务</title>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/layui/layui.js"></script>
+</head>
+<p>下面是各个师傅当前的工作情况：</p>
+<table class="layui-table">
+    <tr>
+        <th>
+            姓名
+        </th>
+        <th>
+            当前工作数
+        </th>
+        <th>
+            操作
+        </th>
+    </tr>
+    <tr th:each="i:${engineers}">
+        <td th:text="${i.name}">李师傅</td>
+        <td th:text="${count[i.id]}">100</td>
+        <td><a class="layui-btn" th:href="@{/repair/delieverto(sid=${i.id},rid=${rid})}" onclick="return confirm('确定要将任务分配给这位师傅吗？');">分配给他</a></td>
+    </tr>
+</table>
+</html>
